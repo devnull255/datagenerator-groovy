@@ -28,6 +28,12 @@ dependencies {
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
 }
 
+test {
+    testLogging {
+       events "passed", "skipped", "failed"
+       showStandardStreams = true
+    }
+}
 application {
     // Define the main class for the application
     mainClassName = 'datagenerator.DataGenerator'

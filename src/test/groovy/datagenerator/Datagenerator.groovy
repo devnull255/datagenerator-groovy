@@ -52,5 +52,15 @@ class DatageneratorTest extends Specification {
         then:
         result >= 0 && result < 100
     }
-    def "datagenerator 
+    def "datagenerator digits returns a numeric string of n length"() {
+        setup:
+        def dg = new Datagenerator()
+
+        when:
+        def result = dg.digits(9)
+
+        then:
+        result.length() == 9
+        result.isNumber()
+    }
 }
