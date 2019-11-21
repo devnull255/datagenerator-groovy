@@ -34,6 +34,37 @@ test {
        showStandardStreams = true
     }
 }
+
+FileTree groovySources = fileTree(dir: 'src/main')
+groovySources.include '**/*.groovy'
+
+
+task('guppy') {
+   doLast {
+       println "I'm Guppy!"
+       println "buildDir is $buildDir"
+       println "projectDir is $projectDir"
+       groovySources.each {File file ->
+            println file
+       }
+   }
+}
+
+task('edit') {
+    doLast {
+       def found = false
+       groovySources.each {File file -> 
+            if (file.toString().contains(sourceFile)) {
+                println "editing $file"
+                found = true
+            }
+       }
+       if (! found) {
+          println "$sourceFile does not exist"
+       }     
+    }
+}
+
 application {
     // Define the main class for the application
     mainClassName = 'datagenerator.DataGenerator'
