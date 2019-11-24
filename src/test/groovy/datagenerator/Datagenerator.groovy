@@ -31,6 +31,7 @@ class DatageneratorTest extends Specification {
         then:
         firstNames.contains(result)
     }
+
     def "datagenerator getLastName returns a name from lastNames"() {
         setup:
         def dg = new Datagenerator()
@@ -52,6 +53,7 @@ class DatageneratorTest extends Specification {
         then:
         result >= 0 && result < 100
     }
+
     def "datagenerator digits returns a numeric string of n length"() {
         setup:
         def dg = new Datagenerator()
@@ -75,4 +77,37 @@ class DatageneratorTest extends Specification {
         result.length() == 8
         result.matches("[a-zA-Z]+")
     }
+
+    def "datagenerator alpha returns string of lower case"() {
+        setup:
+        def dg = new Datagenerator()
+     
+        when:
+        def result = dg.alpha(10, "lower")
+
+        then:
+        result.matches("[a-z]+")
+    }
+
+    def "datagenerator alpha returns string of upper case"() {
+        setup:
+        def dg = new Datagenerator()
+
+        when:
+        def result = dg.alpha(10, "upper")
+
+        then:
+        result.matches("[A-Z]+")
+    }
+
+    def "datagenerator alpha returns string of mixed case"() {
+        setup:
+        def dg = new Datagenerator()
+
+        when:
+        def result = dg.alpha(20, "mixed")
+        
+        then:
+        result.matches("[a-zA-Z]+")
+     }        
 }

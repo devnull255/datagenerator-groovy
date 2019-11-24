@@ -39,11 +39,33 @@ class Datagenerator {
         numString
     }
 
-    public String alpha(int length) {
+    public String alpha(int length, String withCase='lower') {
         // Returns a string of letters for specified lengh
         char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray()
         def alphaString = ''
-        length.times { alphaString += alphabet[random.nextInt(25)] }
+        length.times { 
+               String letter = alphabet[random.nextInt(25)]
+               switch(withCase) {
+                  case 'lower':
+                     letter = letter.toLowerCase()
+                     break
+                  case 'upper':
+                     letter = letter.toUpperCase()
+                     break
+                  case 'mixed':
+                     int anyCase = random.nextInt(2)
+                     if (anyCase == 0) {
+                        letter = letter.toLowerCase()
+                     } else {
+                        letter = letter.toUpperCase()
+                     }
+                     break
+                  default: // use lower case for now 
+                     println "invalid withCase option: $withCase ignored"
+                     break
+               }
+               alphaString += letter
+        }
         alphaString
     }
 
@@ -55,6 +77,9 @@ class Datagenerator {
             println dg.nextInt(100)
             println dg.digits(9)
             println dg.alpha(11)
+            println dg.alpha(15, "lower")
+            println dg.alpha(10, "upper")
+            println dg.alpha(20, "mixed")
         }
     }
 }
