@@ -5,6 +5,7 @@
  * For more details take a look at the Groovy Quickstart chapter in the Gradle
  * User Manual available at https://docs.gradle.org/5.6.4/userguide/tutorial_groovy_projects.html
  */
+import java.lang.management.ManagementFactory
 
 plugins {
     // Apply the groovy plugin to add support for Groovy
@@ -28,6 +29,21 @@ dependencies {
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
 }
 
+
+def String sh(String command) {
+    ProcessBuilder pb = new ProcessBuilder()
+    List<String> cmdArgs = command.tokenize()
+    pb.command(cmdArgs)
+    //println cmdArgs.toString()
+    //pb.inheritIO()
+    pb.redirectInput(new File("/dev/ttys000"))
+    pb.redirectOutput(new File("/dev/ttys000"))
+    Process process = pb.start()
+    def rc = process.waitFor()
+    println "command $command exited with rc: $rc"
+    //println process
+} 
+
 test {
     testLogging {
        events "passed", "skipped", "failed"
@@ -36,15 +52,20 @@ test {
 }
 
 FileTree groovySources = fileTree(dir: 'src/main')
+FileTree groovyTests = fileTree(dir: 'src/test')
 groovySources.include '**/*.groovy'
+groovyTests.include '**/*.groovy'
 
 
-task('guppy') {
+task('listSources') {
    doLast {
        println "I'm Guppy!"
        println "buildDir is $buildDir"
        println "projectDir is $projectDir"
        groovySources.each {File file ->
+            println file
+       }
+       groovyTests.each {File file ->
             println file
        }
    }
@@ -53,19 +74,36 @@ task('guppy') {
 task('edit') {
     doLast {
        def found = false
+       def fileToEdit = ""
        groovySources.each {File file -> 
             if (file.toString().contains(sourceFile)) {
-                println "editing $file"
                 found = true
+                fileToEdit = file.toString()
             }
        }
-       if (! found) {
+       if (found) {
+          sh "vi $fileToEdit"      
+       } else {
           println "$sourceFile does not exist"
        }     
     }
 }
 
+
+def getPName() {
+     ManagementFactory.getRuntimeMXBean().getName() 
+}
+
+
+task('pid') {
+    doLast {
+       println getPName().split('@')[0]
+       print "press enter to continue ->"
+       System.in.newReader().readLine() 
+    }
+}
+
 application {
     // Define the main class for the application
-    mainClassName = 'datagenerator.DataGenerator'
+    mainClassName = 'datagenerator.Datagenerator'
 }
