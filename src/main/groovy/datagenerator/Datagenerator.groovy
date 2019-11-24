@@ -39,6 +39,14 @@ class Datagenerator {
         numString
     }
 
+    public String alpha(int length) {
+        // Returns a string of letters for specified lengh
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray()
+        def alphaString = ''
+        length.times { alphaString += alphabet[random.nextInt(25)] }
+        alphaString
+    }
+
     static void main(String[] args) {
         Datagenerator dg = new Datagenerator()
         println dg.getGreeting()
@@ -46,6 +54,7 @@ class Datagenerator {
             println dg.getFirstName() + ' ' +  dg.getLastName()
             println dg.nextInt(100)
             println dg.digits(9)
+            println dg.alpha(11)
         }
     }
 }

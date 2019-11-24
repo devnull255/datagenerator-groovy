@@ -63,4 +63,16 @@ class DatageneratorTest extends Specification {
         result.length() == 9
         result.isNumber()
     }
+
+    def "datagenerator alpha returns an alpha string of n length"() {
+        setup:
+        def dg = new Datagenerator()
+ 
+        when:
+        def result = dg.alpha(8)
+        
+        then:
+        result.length() == 8
+        result.matches("[a-zA-Z]+")
+    }
 }
