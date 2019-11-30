@@ -9,6 +9,11 @@ class DatageneratorTest extends Specification {
     List<String> firstNames = ['Michael', 'Paul', 'Amy', 'George', 'John', 'Thomas']
     List<String> lastNames = ['Mabin', 'Anderson', 'Washington', 'Jefferson', 'Adams', 'Simpson', 'Smithers',
        'Burns', 'Cartman', 'Bravlovski', 'Marsh']
+    List<String> states = ['AL', 'AK', 'AZ', 'AS', 'CA', 'CO', 'CN', 'DE', 'FL', 'GA', 'HI', 'ID','IL', 'IN',
+       'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM',
+       'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
+       'WI', 'WY']
+
 
     def "datagenerator has a greeting"() {
         setup:
@@ -110,4 +115,16 @@ class DatageneratorTest extends Specification {
         then:
         result.matches("[a-zA-Z]+")
      }        
+    
+    def "datagenerator getState returns a state in states list"() {
+        setup:
+        def dg = new Datagenerator()
+
+        when:
+        def result = dg.getState()
+
+        then:
+        states.contains(result)
+
+    }
 }
