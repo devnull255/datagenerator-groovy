@@ -3,6 +3,8 @@
  */
 package datagenerator
 
+import java.text.SimpleDateFormat
+
 class Datagenerator {
     List<String> _firstNames = ['Michael', 'Paul', 'Amy', 'George', 'John', 'Thomas'] 
     List<String> _lastNames = ['Mabin', 'Anderson', 'Washington', 'Jefferson', 'Adams', 'Simpson', 'Smithers',
@@ -78,6 +80,11 @@ class Datagenerator {
       _states.first()
     }
  
+    public String getCurrentDate() {
+      def curDate = new Date()
+      def format = new SimpleDateFormat("yyyy-MM-dd")
+      format.format(curDate) 
+    }
 
     static void main(String[] args) {
         Datagenerator dg = new Datagenerator()
@@ -91,6 +98,7 @@ class Datagenerator {
             println dg.alpha(10, "upper")
             println dg.alpha(20, "mixed")
             println dg.getState()
+            println dg.getCurrentDate()
         }
     }
 }

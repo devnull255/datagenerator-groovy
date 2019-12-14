@@ -4,6 +4,7 @@
 package datagenerator
 
 import spock.lang.Specification
+import java.text.SimpleDateFormat
 
 class DatageneratorTest extends Specification {
     List<String> firstNames = ['Michael', 'Paul', 'Amy', 'George', 'John', 'Thomas']
@@ -126,5 +127,19 @@ class DatageneratorTest extends Specification {
         then:
         states.contains(result)
 
+    }
+    
+    def "datagenerator getCurrentDate returns formatted current date string"() {
+        setup:
+        def dg = new Datagenerator()
+        def curDate = new Date()
+        def format = new SimpleDateFormat("yyyy-MM-dd")
+        def curDateString = format.format(curDate)
+
+        when:
+        def result = dg.getCurrentDate()
+        
+        then:
+        curDateString == result
     }
 }
