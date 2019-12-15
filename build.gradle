@@ -110,6 +110,12 @@ task('pid') {
 
 distTar.compression = Compression.GZIP
 
+ospackage {
+    os = LINUX
+    into '/opt/datagenerator'
+}
+
+
 task ('DistRpm', type: Rpm) {
     version "$version"
     release "$project.release"
