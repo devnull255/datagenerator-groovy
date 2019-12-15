@@ -142,4 +142,19 @@ class DatageneratorTest extends Specification {
         then:
         curDateString == result
     }
+
+    def "datagenerator getCurrentTimestamp returns formatted timestamp string"() {
+        setup:
+        def dg = new Datagenerator()
+        def curTimestamp = new Date()
+        def format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+        def curDateString = format.format(curTimestamp)
+
+        when:
+        def result = dg.getCurrentTimestamp()
+        
+        then:
+        curDateString == result
+    }
+
 }

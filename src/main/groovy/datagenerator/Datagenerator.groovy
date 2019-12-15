@@ -86,6 +86,12 @@ class Datagenerator {
       format.format(curDate) 
     }
 
+    public String getCurrentTimestamp() {
+      def curTimestamp = new Date()
+      def format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+      format.format(curTimestamp)
+    }
+
     static void main(String[] args) {
         Datagenerator dg = new Datagenerator()
         println dg.getGreeting()
@@ -99,6 +105,7 @@ class Datagenerator {
             println dg.alpha(20, "mixed")
             println dg.getState()
             println dg.getCurrentDate()
+            println dg.getCurrentTimestamp()
         }
     }
 }
