@@ -13,6 +13,9 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application
     id 'application'
+
+    // RPM support
+    id 'nebula.ospackage' version "8.0.3"
 }
 
 repositories {
@@ -22,6 +25,8 @@ repositories {
 }
 
 dependencies {
+    implementation  "com.netflix.nebula:gradle-ospackage-plugin:8.0.3"
+
     // Use the latest Groovy version for building this library
     implementation 'org.codehaus.groovy:groovy-all:2.5.7'
 
@@ -101,6 +106,14 @@ task('pid') {
        print "press enter to continue ->"
        System.in.newReader().readLine() 
     }
+}
+
+distTar.compression = Compression.GZIP
+
+task ('DistRpm', type: Rpm) {
+    version "$version"
+    release "$project.release"
+    dependsOn test
 }
 
 application {
