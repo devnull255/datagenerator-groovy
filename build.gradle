@@ -15,7 +15,7 @@ plugins {
     id 'application'
 
     // RPM support
-    id 'nebula.ospackage' version "8.0.3"
+    id 'nebula.ospackage' version "8.2.0"
 }
 
 repositories {
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    implementation  "com.netflix.nebula:gradle-ospackage-plugin:8.0.3"
+    implementation  "com.netflix.nebula:gradle-ospackage-plugin:8.2.0"
 
     // Use the latest Groovy version for building this library
     implementation 'org.codehaus.groovy:groovy-all:2.5.7'
@@ -113,13 +113,16 @@ distTar.compression = Compression.GZIP
 ospackage {
     os = LINUX
     into '/opt/datagenerator'
+    from (jar.outputs.files) {
+       into 'lib'
+    }
 }
 
 
-task ('DistRpm', type: Rpm) {
+task ('distRpm', type: Rpm) {
     version "$version"
     release "$project.release"
-    dependsOn test
+    dependsOn jar
 }
 
 application {
